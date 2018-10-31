@@ -1,13 +1,21 @@
 FROM alpine
 
-MAINTAINER Acris Liu "acrisliu@gmail.com"
+ENV FRP_MODEL=frps
 
-ENV FRP_VERSION 0.14.1
+COPY ./frp /etc/frp
 
 RUN set -ex \
-    && apk add --no-cache --virtual .build-deps openssl \
-    && apk del .build-deps
+  && apk add --no-cache --virtual .build-deps openssl \
+  && cd /etc/frp \
+  && cp frps /usr/bin \
+  && cp frpc /usr/bin \
+  && chmod +x /usr/bin/frps \
+  && chmod +x /usr/bin/frpc \
+  && apk del .build-deps 
 
 VOLUME /etc/frp
 
-CMD ["/etc/frp/frpc", "-c", "/etc/frp/frpc.ini"]
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT [ "/entrypoint.sh" ]
+CMD [ "-model=frps","-config=/etc/frp/frps.ini" ]
