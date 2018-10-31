@@ -1,7 +1,7 @@
 #!/bin/sh
 
-model=frps
-config=/etc/frp/frps.ini
+model=frpc
+config=/etc/frp/frpc.ini
 for i in "$@"
 do
 case $i in
@@ -23,7 +23,7 @@ case $i in
 esac
 done
 
-echo "model is $model config is $config"
+echo "model is $model and config is $config"
 
 
 /usr/bin/${model} -c ${config}

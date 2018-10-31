@@ -1,6 +1,6 @@
 FROM alpine
 
-ENV FRP_MODEL=frps
+ENV FRP_MODEL=frpc
 
 COPY ./frp /etc/frp
 
@@ -18,4 +18,4 @@ VOLUME /etc/frp
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT [ "/entrypoint.sh" ]
-CMD [ "-model=frps","-config=/etc/frp/frps.ini" ]
+CMD [ "-model=frpc","-config=/etc/frp/frpc.ini" ]
